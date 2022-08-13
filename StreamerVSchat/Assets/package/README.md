@@ -1,0 +1,7 @@
+SerializableDictionary
+====================
+
+Collections
+---------------------
+
+* `SerializableDictionary`

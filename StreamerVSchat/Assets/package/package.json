@@ -1,0 +1,19 @@
+{
+  "name": "com.beetlecircus.serializabledictionary",
+  "version": "0.1.2-preview.4",
+  "displayName": "SerializableDictionary",
+  "description": "Dictionary framework developed by BeetleCircus",
+  "unity": "2020.1",
+  "dependencies": {
+ },
+ "keywords": [
+    "collections",
+    "serializable",
+    "dictionary"
+  ],
+  "author": {
+    "name": "Fredrik Ludvigsen",
+    "email": "post@fredrik.ludvigsen.name"
+  }
+}
+
