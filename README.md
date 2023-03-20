@@ -1,7 +1,7 @@
-#Redemption Stone: Streamer Vs Chat
+# Redemption Stone: Streamer Vs Chat
  Streamer Vs Chat is a game made for streamers to play against your chat.
  
- https://carolsalvato.itch.io/redemption-stone-streamer-vs-chat
+ _<https://carolsalvato.itch.io/redemption-stone-streamer-vs-chat>_
  
  The stone of redemption has come to you, it's time to rid your home of the monsters that destroyed it!!
 
