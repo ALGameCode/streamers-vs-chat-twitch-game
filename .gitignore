@@ -73,3 +73,6 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 *.tar.7z
+
+
+StreamerVSchat/Library/PackageCache/com.unity.burst@*/.Runtime/hostmac/
