@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Twitch.Connection;
 using UnityEngine;
 
 public class PlayerStatus : EntityStatus
@@ -25,7 +26,7 @@ public class PlayerStatus : EntityStatus
 
     public void GetPlayerStreamName()
     {
-        PlayerName = Connection.instance.channelName.Substring(0);
+        PlayerName = TwitchConnection.ChannelName.Substring(0);
         ControllerGameUI.instance.SetTextStreamName(PlayerName);
     }
 

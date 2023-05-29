@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Twitch.Connection;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,8 +23,8 @@ public class ConnectionUI : MonoBehaviour
 
     public void ConnectChat()
     {
-        Connection.instance.InsertConnectionValue(userNameInput.text.ToString(), passwordInput.text, channelNameInput.text);
-        Connection.instance.ConnectStatus = true;
+        TwitchConnection.SetConnection(userNameInput.text.ToString(), passwordInput.text, channelNameInput.text);
+        //TwitchConnection.ConnectStatus = true;
     }
 
     public void OpenURL(string url)
@@ -33,9 +34,9 @@ public class ConnectionUI : MonoBehaviour
 
     void Update()
     {
-        if(Connection.instance.ConnectStatus)
+        if(TwitchConnection.IsConnected)
         {
-            if(Connection.instance.ValidConnection())
+            if(TwitchConnection.IsValidConnection())
             {
                 connectionStatusText.text = "Successfully Connected!";
                 PlayerStatus.instance.GetPlayerStreamName();

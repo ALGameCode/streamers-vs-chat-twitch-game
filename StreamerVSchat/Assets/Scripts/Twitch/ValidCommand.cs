@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using Twitch;
 using UnityEngine;
 
 public class ValidCommand : MonoBehaviour
@@ -28,13 +27,12 @@ public class ValidCommand : MonoBehaviour
     public void ValidChatCommand(string chatUserName, string command)
     {
         bool isValid = false;
-        
-        for(int i = 0; i < commandConfig.commandsMobs.Count; i++)
+        for (int i = 0; i < commandConfig.commandsMobs.Count; i++)
         {
-            if(commandConfig.commandsMobs[i].command.Equals(command))
+            if(commandConfig.commandsMobs[i].Command.Equals(command))
             {
                 BuildText(chatUserName, command);
-                CommandSummon(commandConfig.commandsMobs[i].mob, commandConfig.commandsMobs[i].enemyCost, chatUserName);
+                CommandSummon(commandConfig.commandsMobs[i].Mob, commandConfig.commandsMobs[i].EnemyCost, chatUserName);
                 isValid = true;
             }
         }
@@ -43,10 +41,10 @@ public class ValidCommand : MonoBehaviour
         {
             for(int i = 0; i < commandConfig.commandsFunctions.Count; i++)
             {
-                if(commandConfig.commandsFunctions[i].command.Equals(command))
+                if(commandConfig.commandsFunctions[i].Command.Equals(command))
                 {
                     BuildText(chatUserName, command);
-                    CommandAction(commandConfig.commandsFunctions[i].function, chatUserName);
+                    CommandAction(commandConfig.commandsFunctions[i].Function, chatUserName);
                 }
             }
         }
@@ -91,7 +89,7 @@ public class ValidCommand : MonoBehaviour
     public void RandomMob(string chatUserName)
     {
         int index = Random.Range(0, commandConfig.commandsMobs.Count);
-        CommandSummon(commandConfig.commandsMobs[index].mob, commandConfig.commandsMobs[index].enemyCost, chatUserName);
+        CommandSummon(commandConfig.commandsMobs[index].Mob, commandConfig.commandsMobs[index].EnemyCost, chatUserName);
     }
 
     public void SumEnergy()
