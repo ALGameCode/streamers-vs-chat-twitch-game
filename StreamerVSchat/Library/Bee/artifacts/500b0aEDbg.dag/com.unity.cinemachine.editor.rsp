@@ -113,6 +113,7 @@
 -define:CINEMACHINE_PHYSICS_2D
 -define:CINEMACHINE_PHYSICS
 -define:CINEMACHINE_UGUI
+-define:CINEMACHINE_LWRP_7_3_1
 -define:CINEMACHINE_TIMELINE_1_5_0
 -define:CINEMACHINE_UNITY_ANIMATION
 -define:CINEMACHINE_UNITY_IMGUI
@@ -334,11 +335,10 @@
 -r:"D:/Program Files/Unity/Hub/Editor/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/System.Transactions.dll"
 -r:"D:/Program Files/Unity/Hub/Editor/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/System.Xml.dll"
 -r:"D:/Program Files/Unity/Hub/Editor/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/System.Xml.Linq.dll"
--r:"D:/UnityProjects/Streamers-vs-chat/streamers-vs-chat-twitch-game/StreamerVSchat/Library/PackageCache/com.unity.burst@1.6.6/Unity.Burst.CodeGen/Unity.Burst.Cecil.dll"
--r:"D:/UnityProjects/Streamers-vs-chat/streamers-vs-chat-twitch-game/StreamerVSchat/Library/PackageCache/com.unity.burst@1.6.6/Unity.Burst.CodeGen/Unity.Burst.Cecil.Mdb.dll"
--r:"D:/UnityProjects/Streamers-vs-chat/streamers-vs-chat-twitch-game/StreamerVSchat/Library/PackageCache/com.unity.burst@1.6.6/Unity.Burst.CodeGen/Unity.Burst.Cecil.Pdb.dll"
--r:"D:/UnityProjects/Streamers-vs-chat/streamers-vs-chat-twitch-game/StreamerVSchat/Library/PackageCache/com.unity.burst@1.6.6/Unity.Burst.CodeGen/Unity.Burst.Cecil.Rocks.dll"
--r:"D:/UnityProjects/Streamers-vs-chat/streamers-vs-chat-twitch-game/StreamerVSchat/Library/PackageCache/com.unity.burst@1.6.6/Unity.Burst.Unsafe.dll"
+-r:"D:/UnityProjects/Streamers-vs-chat/streamers-vs-chat-twitch-game/StreamerVSchat/Library/PackageCache/com.unity.burst@1.8.2/Unity.Burst.CodeGen/Unity.Burst.Cecil.dll"
+-r:"D:/UnityProjects/Streamers-vs-chat/streamers-vs-chat-twitch-game/StreamerVSchat/Library/PackageCache/com.unity.burst@1.8.2/Unity.Burst.CodeGen/Unity.Burst.Cecil.Mdb.dll"
+-r:"D:/UnityProjects/Streamers-vs-chat/streamers-vs-chat-twitch-game/StreamerVSchat/Library/PackageCache/com.unity.burst@1.8.2/Unity.Burst.CodeGen/Unity.Burst.Cecil.Pdb.dll"
+-r:"D:/UnityProjects/Streamers-vs-chat/streamers-vs-chat-twitch-game/StreamerVSchat/Library/PackageCache/com.unity.burst@1.8.2/Unity.Burst.CodeGen/Unity.Burst.Cecil.Rocks.dll"
 -r:"D:/UnityProjects/Streamers-vs-chat/streamers-vs-chat-twitch-game/StreamerVSchat/Library/PackageCache/com.unity.collab-proxy@1.17.7/Lib/Editor/PlasticSCM/log4netPlastic.dll"
 -r:"D:/UnityProjects/Streamers-vs-chat/streamers-vs-chat-twitch-game/StreamerVSchat/Library/PackageCache/com.unity.collab-proxy@1.17.7/Lib/Editor/PlasticSCM/Unity.Plastic.Antlr3.Runtime.dll"
 -r:"D:/UnityProjects/Streamers-vs-chat/streamers-vs-chat-twitch-game/StreamerVSchat/Library/PackageCache/com.unity.collab-proxy@1.17.7/Lib/Editor/PlasticSCM/Unity.Plastic.Newtonsoft.Json.dll"
@@ -347,6 +347,10 @@
 -r:"D:/UnityProjects/Streamers-vs-chat/streamers-vs-chat-twitch-game/StreamerVSchat/Library/PackageCache/com.unity.nuget.newtonsoft-json@3.0.2/Runtime/Newtonsoft.Json.dll"
 -r:"Library/Bee/artifacts/500b0aEDbg.dag/Cinemachine.ref.dll"
 -r:"Library/Bee/artifacts/500b0aEDbg.dag/Unity.InputSystem.ref.dll"
+-r:"Library/Bee/artifacts/500b0aEDbg.dag/Unity.RenderPipelines.Core.Editor.ref.dll"
+-r:"Library/Bee/artifacts/500b0aEDbg.dag/Unity.RenderPipelines.Core.Runtime.ref.dll"
+-r:"Library/Bee/artifacts/500b0aEDbg.dag/Unity.RenderPipelines.Universal.Editor.ref.dll"
+-r:"Library/Bee/artifacts/500b0aEDbg.dag/Unity.RenderPipelines.Universal.Runtime.ref.dll"
 -r:"Library/Bee/artifacts/500b0aEDbg.dag/Unity.Timeline.Editor.ref.dll"
 -r:"Library/Bee/artifacts/500b0aEDbg.dag/Unity.Timeline.ref.dll"
 -r:"Library/Bee/artifacts/500b0aEDbg.dag/UnityEditor.TestRunner.ref.dll"
