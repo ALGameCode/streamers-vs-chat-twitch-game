@@ -76,9 +76,10 @@ namespace Twitch
         [SerializeField]
         [Tooltip("The command given by the chat to perform an action")]
         private string command = "";
+
         [SerializeField]
         [Tooltip("enum of executed function")]
-        private CommandFunctionsOptions function = CommandFunctionsOptions.energyFunction;
+        private CommandFunctionsOptions function = CommandFunctionsOptions.EnergyFunction;
 
         public string Command
         {
@@ -98,8 +99,8 @@ namespace Twitch
     /// </summary>
     public enum CommandFunctionsOptions
     {
-        energyFunction,
-        voteFunction,
-        randomMob
+        EnergyFunction,
+        VoteFunction,
+        RandomMob
     }
 }

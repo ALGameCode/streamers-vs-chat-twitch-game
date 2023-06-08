@@ -4,21 +4,14 @@ namespace Twitch.Connection
     /// <summary>
     /// Reads chat messages from Twitch and processes them
     /// </summary>
-    public class ReadChat : SingletonMonoBehaviour<ReadChat>
+    public static class ReadChat
     {
-        /// <summary>
-        /// Updates the chat reading process
-        /// </summary>
-        private void Update()
-        {
-            GetChat();
-        }
 
         /// <summary>
         /// Reads the next chat message from Twitch
         /// </summary>
         /// <returns>A tuple containing the user chat name and chat message</returns>
-        public (string, string) GetChat()
+        public static (string, string) GetChat()
         {
             if (!TwitchConnection.IsConnected || !TwitchConnection.IsValidConnection())
             {
@@ -29,7 +22,6 @@ namespace Twitch.Connection
             ChatInfo chatInfo = ProcessChatMessage(message);
             string chatName = chatInfo.ChatName;
             string chatMessage = chatInfo.ChatMessage;
-            ValidCommand.instance.ValidChatCommand(chatName, chatMessage); // TODO: ISSO TEM QUE SAIR DAQUI, TALVEZ UM MANAGER?
             return (chatName, chatMessage);
         }
 
@@ -38,7 +30,7 @@ namespace Twitch.Connection
         /// </summary>
         /// <param name="message">The chat message to process</param>
         /// <returns>An instance of ChatInfo with the chat name and message content</returns>
-        private ChatInfo ProcessChatMessage(string message)
+        private static ChatInfo ProcessChatMessage(string message)
         {
             ChatInfo chatInfo = new ChatInfo();
 

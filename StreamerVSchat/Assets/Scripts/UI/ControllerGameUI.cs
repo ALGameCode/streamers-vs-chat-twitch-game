@@ -26,6 +26,8 @@ public class ControllerGameUI : MonoBehaviour
     [Header("Game")]
     public Text textTimer;
 
+    private string commmandText;
+
     // PopUp
     public GameObject endGamePopUp;
 
@@ -68,6 +70,12 @@ public class ControllerGameUI : MonoBehaviour
     public void SetTextChatCommands(string commands)
     {
         textChatCommands.text = commands;
+    }
+
+    public void SetTextChatCommands((string chatUserName, string command) commandTuple)
+    {
+        commmandText = $"{commmandText} \n {commandTuple.chatUserName} : {commandTuple.command}";
+        textChatCommands.text = commmandText;
     }
 
     public void ShowPopUpPainel(GameObject popUp)
