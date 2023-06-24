@@ -9,6 +9,7 @@ TagManager:
   - ConnectionPopUp
   - Crystals
   - PlayerSkill
+  - Floor
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Player
   - 
   - 
   - 
@@ -43,6 +44,51 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: BackGround
+    uniqueID: 3395087729
+    locked: 0
+  - name: GroundBase
+    uniqueID: 3412070651
+    locked: 0
+  - name: GroundDetail
+    uniqueID: 2588597243
+    locked: 0
+  - name: GroundObjectsDown
+    uniqueID: 301723789
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: BuildDown
+    uniqueID: 2434708115
+    locked: 0
+  - name: GroundObjectsUp
+    uniqueID: 1911595173
+    locked: 0
+  - name: BuildUp
+    uniqueID: 1788542151
+    locked: 0
+  - name: ObjectsDown
+    uniqueID: 2648953951
+    locked: 0
+  - name: ObjectsMid
+    uniqueID: 3716228367
+    locked: 0
+  - name: ObjectsUp
+    uniqueID: 69649261
+    locked: 0
+  - name: Mob
+    uniqueID: 944631435
+    locked: 0
+  - name: Player
+    uniqueID: 2737328631
+    locked: 0
+  - name: VFX
+    uniqueID: 3777645503
+    locked: 0
+  - name: HUD
+    uniqueID: 1474145149
+    locked: 0
+  - name: UI
+    uniqueID: 1247453193
     locked: 0
