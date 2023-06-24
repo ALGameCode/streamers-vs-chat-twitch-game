@@ -18,6 +18,31 @@ namespace Twitch
         [Tooltip("Comandos para executar funções")]
         public List<CommandFunctions> commandsFunctions = new List<CommandFunctions>();
 
+        public Dictionary<string, CommandMobs> mobsCommandsDictionary = new Dictionary<string, CommandMobs>();
+        public Dictionary<string, CommandFunctions> functionsCommandsDictionary = new Dictionary<string, CommandFunctions>();
+
+        /// <summary>
+        /// Builds dictionaries for command objects, using their command names as keys.
+        /// </summary>
+        /// <param name="mobs">List of CommandMobs objects.</param>
+        /// <param name="functions">List of CommandFunctions objects.</param>
+        /// <param name="mobsCommandsDictionary">Output dictionary for CommandMobs objects.</param>
+        /// <param name="functionsCommandsDictionary">Output dictionary for CommandFunctions objects.</param>
+        public void BuildCommandDictionaries(List<CommandMobs> mobs, List<CommandFunctions> functions, out Dictionary<string, CommandMobs> mobsCommandsDictionary, out Dictionary<string, CommandFunctions> functionsCommandsDictionary)
+        {
+            mobsCommandsDictionary = new Dictionary<string, CommandMobs>();
+            functionsCommandsDictionary = new Dictionary<string, CommandFunctions>();
+
+            foreach (CommandMobs mob in mobs)
+            {
+                mobsCommandsDictionary.Add(mob.Command, mob);
+            }
+
+            foreach (CommandFunctions function in functions)
+            {
+                functionsCommandsDictionary.Add(function.Command, function);
+            }
+        }
     }
 
     /// <summary>
@@ -101,6 +126,7 @@ namespace Twitch
     {
         EnergyFunction,
         VoteFunction,
-        RandomMob
+        RandomMobFunction,
+        PlayGameFunction
     }
 }

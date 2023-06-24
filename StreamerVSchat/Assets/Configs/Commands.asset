@@ -26,6 +26,8 @@ MonoBehaviour:
     enemyCost: 1
     mob: {fileID: 15868431919985974, guid: 4878d9c261026dd4490f405709baed44, type: 3}
   commandsFunctions:
+  - command: '!play'
+    function: 3
   - command: '!energy'
     function: 0
   - command: '!vote'

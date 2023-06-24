@@ -1,4 +1,4 @@
-using Utils;
+
 namespace Twitch.Connection
 {
     /// <summary>
@@ -20,9 +20,7 @@ namespace Twitch.Connection
 
             string message = TwitchConnection.Reader.ReadLine();
             ChatInfo chatInfo = ProcessChatMessage(message);
-            string chatName = chatInfo.ChatName;
-            string chatMessage = chatInfo.ChatMessage;
-            return (chatName, chatMessage);
+            return (chatInfo.ChatName, chatInfo.ChatMessage);
         }
 
         /// <summary>

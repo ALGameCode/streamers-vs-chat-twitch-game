@@ -37,6 +37,19 @@ public class ChatStatus : EntityStatus
         life = MAX_LIFE;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userName"></param>
+    public void AddNewChatUser(string userName)
+    {
+        if (chatUsers.ContainsKey(userName))
+        {
+            return;
+        }
+        chatUsers.Add(userName, new ChatUser(userName, 0, 1, 0));
+    }
+
     public string SearchUserDamage()
     {
         // TODO: Adicionar uma forma de pegar mais de um usuario casa haja empate e desempatar pela quantidade de mob

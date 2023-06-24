@@ -1,103 +1,114 @@
-using Twitch;
+using System.Data;
 using UnityEngine;
 
-public static class ExecuteCommand
+namespace Twitch
 {
-
-    public static void CommandAction(CommandConfig commandConfig, (string chatUserName, string command) commandTuple)
+    public static class ExecuteCommand
     {
-        string chatUserName = commandTuple.chatUserName;
-        string command = commandTuple.command;
 
-        if (TryExecuteCommandFunctions(commandConfig, chatUserName, command))
+        public static void CommandAction(CommandConfig commandConfig, (string chatUserName, string command) commandTuple)
         {
-            return;
-        }
-
-        TryExecuteCommandMobs(commandConfig, chatUserName, command);
-    }
-
-    private static bool TryExecuteCommandMobs(CommandConfig commandConfig, string chatUserName, string command)
-    {
-        foreach (CommandMobs commandMobs in commandConfig.commandsMobs)
-        {
-            if (commandMobs.Command.Equals(command))
+            string chatUserName = commandTuple.chatUserName;
+            string command = commandTuple.command;
+            Debug.Log("CommandAction");
+            if (commandConfig.functionsCommandsDictionary.ContainsKey(command))
             {
-                CommandSummon(commandMobs.Mob, commandMobs.EnemyCost, chatUserName);
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private static bool TryExecuteCommandFunctions(CommandConfig commandConfig, string chatUserName, string command)
-    {
-        foreach (CommandFunctions commandFunction in commandConfig.commandsFunctions)
-        {
-            if (commandFunction.Command.Equals(command))
-            {
-                //CommandAction(commandConfig, commandFunction.Function, chatUserName);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static void CommandSummon(GameObject mob, int valEnergy, string chatUserName)
-    {
-        if (ChatStatus.instance.energy >= valEnergy)
-        {
-            MobSpawn.instance.SpawnMob(mob, chatUserName);
-            ChatStatus.instance.DecreaseEnergy(valEnergy);
-            if (ChatStatus.instance.chatUsers.ContainsKey(chatUserName))
-            {
-                ChatStatus.instance.chatUsers[chatUserName].SpawnedMonsters++;
+                ExecuteCommandAction(commandConfig, commandConfig.functionsCommandsDictionary[command].Function, chatUserName);
             }
             else
             {
-                ChatStatus.instance.chatUsers.Add(chatUserName, new ChatUser(chatUserName, 0, 1, 0));
+                CommandSummon(commandConfig.mobsCommandsDictionary[command].Mob, commandConfig.mobsCommandsDictionary[command].EnemyCost, chatUserName);
+            }            
+        }
+
+        public static void ExecuteCommandAction(CommandConfig commandConfig, CommandFunctionsOptions option, string chatUserName)
+        {
+            Debug.Log("ExecuteCommandAction");
+            switch (option)
+            {
+                case CommandFunctionsOptions.EnergyFunction:
+                    SumEnergy(chatUserName);
+                    break;
+                case CommandFunctionsOptions.RandomMobFunction:
+                    RandomMob(commandConfig, chatUserName);
+                    break;
+                case CommandFunctionsOptions.VoteFunction:
+                    ExecuteVoting(chatUserName);
+                    break;
+                case CommandFunctionsOptions.PlayGameFunction:
+                    NewChatPlayer(chatUserName);
+                    break;
             }
         }
-    }
 
-    public static void CommandAction(CommandConfig commandConfig, CommandFunctionsOptions option, string chatUserName)
-    {
-        switch (option)
+        public static void NewChatPlayer(string chatUserName)
         {
-            case CommandFunctionsOptions.EnergyFunction:
-                //SumEnergy();
-                break;
-            case CommandFunctionsOptions.RandomMob:
-                RandomMob(commandConfig, chatUserName);
-                break;
-            case CommandFunctionsOptions.VoteFunction:
-                // ...
-                break;
+            Debug.Log("NewChatPlayer");
+            ChatStatus.instance.AddNewChatUser(chatUserName);
+        }
+
+        public static void SumEnergy(string chatUserName)
+        {
+            if (!VerifyChatUser(chatUserName))
+            {
+                return;
+            }
+            int points = ChatStatus.instance.energy;
+            ControllerGameUI.instance.SetTextPoints(points.ToString());
+            ChatStatus.instance.AddEnergy(1);
+            ControllerGameUI.instance.ChangeEnergyUI();
+        }
+
+        public static void ExecuteVoting(string chatUserName)
+        {
+            if (!VerifyChatUser(chatUserName))
+            {
+                return;
+            }
+            // TODO: ... 
+        }
+
+        public static void RandomMob(CommandConfig commandConfig, string chatUserName)
+        {
+            if (!VerifyChatUser(chatUserName))
+            {
+                return;
+            }
+            int index = Random.Range(0, commandConfig.commandsMobs.Count);
+            CommandSummon(commandConfig.commandsMobs[index].Mob, commandConfig.commandsMobs[index].EnemyCost, chatUserName);
+        }
+
+        public static void CommandSummon(GameObject mob, int valEnergy, string chatUserName)
+        {
+            if (!VerifyChatUser(chatUserName))
+            {
+                return;
+            }
+            Debug.Log("CommandSummon");
+            if (ChatStatus.instance.energy >= valEnergy)
+            {
+                MobSpawn.instance.SpawnMob(mob, chatUserName);
+                ChatStatus.instance.DecreaseEnergy(valEnergy);
+                if (ChatStatus.instance.chatUsers.ContainsKey(chatUserName))
+                {
+                    ChatStatus.instance.chatUsers[chatUserName].SpawnedMonsters++;
+                }
+            }
+        }
+
+        public static string BuildText(string chatCommandsText, string chatUserName, string command)
+        {
+            return $"{chatCommandsText} \n {chatUserName} : {command}";
+        }
+
+        private static bool VerifyChatUser(string chatUserName)
+        {
+            if (!ChatStatus.instance.chatUsers.ContainsKey(chatUserName))
+            {
+                return false;
+            }
+
+            return true;
         }
     }
-
-    public static string BuildText(string chatCommandsText, string chatUserName, string command)
-    {
-        return $"{chatCommandsText} \n {chatUserName} : {command}";
-    }
-
-    public static void RandomMob(CommandConfig commandConfig, string chatUserName)
-    {
-        int index = Random.Range(0, commandConfig.commandsMobs.Count);
-        CommandSummon(commandConfig.commandsMobs[index].Mob, commandConfig.commandsMobs[index].EnemyCost, chatUserName);
-    }
-
-    /*public void SumEnergy()
-    {
-        points = ChatStatus.instance.energy;
-        controllerGameUI.SetTextPoints(points.ToString());
-        ChatStatus.instance.AddEnergy(1);
-        controllerGameUI.ChangeEnergyUI();
-    }*/
-
-    /*public void ShearchCommand(List<T> list)
-    {
-        
-    }*/
 }
