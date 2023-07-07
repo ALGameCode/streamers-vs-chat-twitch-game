@@ -42,6 +42,7 @@ namespace Twitch
                 Debug.Log($"2");
                 ControllerGameUI.instance.SetTextChatCommands(commandTuple);
                 Debug.Log($"3");
+                ControllerGameUI.instance.SetTextPoints(ChatStatus.instance.energy.ToString());
                 ControllerGameUI.instance.ChangeEnergyUI();
             }
         }

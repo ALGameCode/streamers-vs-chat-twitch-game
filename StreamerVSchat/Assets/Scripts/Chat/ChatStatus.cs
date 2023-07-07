@@ -48,6 +48,7 @@ public class ChatStatus : EntityStatus
             return;
         }
         chatUsers.Add(userName, new ChatUser(userName, 0, 1, 0));
+        ControllerGameUI.instance.SetTextChatCommandPlay(userName);
     }
 
     public string SearchUserDamage()

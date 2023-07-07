@@ -78,6 +78,12 @@ public class ControllerGameUI : MonoBehaviour
         textChatCommands.text = commmandText;
     }
 
+    public void SetTextChatCommandPlay(string chatUserName)
+    {
+        commmandText = $"{commmandText} \n The chat user {chatUserName} is now playing!";
+        textChatCommands.text = commmandText;
+    }
+
     public void ShowPopUpPainel(GameObject popUp)
     {
         if(popUp.activeSelf)
@@ -92,18 +98,30 @@ public class ControllerGameUI : MonoBehaviour
 
     public void ChangeEnergyUI()
     {
-        int index = 0;
-        int percent = ChatStatus.instance.EnergyPercent();
-        if(percent > 0 && percent < 11) index = 1;
-        else if(percent > 11 && percent < 24) index = 2;
-        else if(percent > 24 && percent < 36) index = 3;
-        else if(percent > 36 && percent < 49) index = 4;
-        else if(percent > 49 && percent < 61) index = 5;
-        else if(percent > 61 && percent < 74) index = 6;
-        else if(percent > 74 && percent < 86) index = 7;
-        else if(percent > 86) index = 8;
-        
+        int index = GetEnergyIndex(ChatStatus.instance.EnergyPercent());        
         energyBallEnemy.GetComponent<Image>().sprite = energyBallEnemyValue[index];
+    }
+
+    private int GetEnergyIndex(int percent)
+    {
+        if (percent > 86)
+            return 8;
+        if (percent > 74)
+            return 7;
+        if (percent > 61)
+            return 6;
+        if (percent > 49)
+            return 5;
+        if (percent > 36)
+            return 4;
+        if (percent > 24)
+            return 3;
+        if (percent > 11)
+            return 2;
+        if (percent > 0)
+            return 1;
+
+        return 0;
     }
 
     public void SetPlayerHPSlider()
