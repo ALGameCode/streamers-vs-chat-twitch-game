@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f386f4b74b710f04e9cd98b0ad587efd, type: 3}
+  m_Name: HordeData_0
+  m_EditorClassIdentifier: 
+  crystalIndexTrigger: 0
+  waves:
+  - mobSpawnWaveInfo:
+    - mobPrefab: {fileID: 15868431919985974, guid: f018910960edcc949a57538707b8a40a, type: 3}
+      quantity: 5
+      summonerName: 
+    startDelay: 5
+    mobSpawnInterval: 7
+  - mobSpawnWaveInfo:
+    - mobPrefab: {fileID: 15868431919985974, guid: f018910960edcc949a57538707b8a40a, type: 3}
+      quantity: 5
+      summonerName: 
+    - mobPrefab: {fileID: 5805994705208712976, guid: 892795c7b25db1c48b008c6e0e9abff1, type: 3}
+      quantity: 3
+      summonerName: 
+    startDelay: 5
+    mobSpawnInterval: 5

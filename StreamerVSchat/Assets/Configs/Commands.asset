@@ -16,15 +16,15 @@ MonoBehaviour:
   - command: '!mob1'
     numSummoners: 1
     enemyCost: 5
-    mob: {fileID: 5805994705208712976, guid: 68790525304608948b3e671832ff7a68, type: 3}
+    mob: {fileID: 15868431919985974, guid: f018910960edcc949a57538707b8a40a, type: 3}
   - command: '!mob2'
     numSummoners: 1
     enemyCost: 3
-    mob: {fileID: 5805994705208712976, guid: 6c4d47c48e934cb429695ab176c28f73, type: 3}
+    mob: {fileID: 5805994705208712976, guid: 892795c7b25db1c48b008c6e0e9abff1, type: 3}
   - command: '!mob3'
     numSummoners: 1
     enemyCost: 1
-    mob: {fileID: 15868431919985974, guid: 4878d9c261026dd4490f405709baed44, type: 3}
+    mob: {fileID: 5805994705208712976, guid: 1f78f798517ec76438a73f2d55524a73, type: 3}
   commandsFunctions:
   - command: '!play'
     function: 3
