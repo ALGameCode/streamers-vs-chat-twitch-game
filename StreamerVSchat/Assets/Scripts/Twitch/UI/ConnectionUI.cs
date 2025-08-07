@@ -42,6 +42,10 @@ namespace Twitch.UI
         [SerializeField]
         private string messageSuccessfullyConnection = "Successfully";
 
+        [Tooltip("Toggle to save OAuth Password")]
+        [SerializeField]
+        private Toggle savePasswordToggle;
+
         #endregion vars
 
         private void Start()
@@ -61,6 +65,20 @@ namespace Twitch.UI
             }
         }
 
+        private void OnDisable()
+        {
+            Debug.Log("OnDisable chamado para ConnectionUI.");
+            if (TwitchConnection.IsConnected)
+            {
+                Debug.Log("TwitchConnection está conectado. Desconectando...");
+                //TwitchConnection.Disconnect();  // Certifique-se de que isso está implementado
+            }
+            else
+            {
+                Debug.LogWarning("TwitchConnection não estava conectado quando OnDisable foi chamado.");
+            }
+        }
+
         /// <summary>
         /// Updates the connection UI by setting the connection status, retrieving player stream name, saving player connection info, and initiating the wait to close connection popup.
         /// </summary>
@@ -68,7 +86,8 @@ namespace Twitch.UI
         {
             UpdateConnectionStatus(messageSuccessfullyConnection, connectedColor);
             PlayerStatus.instance.GetPlayerStreamName();
-            Save.instance.SaveConnectPlayerInfo(userNameInput.text, channelNameInput.text);
+            Save.SaveConnectPlayerInfo(userNameInput.text, channelNameInput.text);
+            SetSaveTogglePassword();
             StartCoroutine(WaitAndCloseConnectionPopUp());
         }
 
@@ -110,6 +129,24 @@ namespace Twitch.UI
         }
 
         /// <summary>
+        /// Save and Delete save OAuth Password
+        /// </summary>
+        public void SetSaveTogglePassword() 
+        { 
+            if(savePasswordToggle != null)
+            {
+                if(savePasswordToggle.isOn)
+                {
+                    Save.SaveOAuthPassword(passwordInput.text);
+                }
+                else
+                {
+                    Save.DeleteOAuthPassword();
+                }
+            }
+        }
+
+        /// <summary>
         ///  Loads the connection information from player preferences.
         /// </summary>
         private void LoadConnectionInfo()
@@ -120,6 +157,13 @@ namespace Twitch.UI
                 string savedChannelname = PlayerPrefs.GetString("channelname");
 
                 UpdateInputFields(savedUsername, savedChannelname);
+            }
+
+            if(PlayerPrefs.HasKey("password"))
+            {
+                string passwordChannel = PlayerPrefs.GetString("password");
+                passwordInput.text = passwordChannel;
+                savePasswordToggle.isOn = true;
             }
         }
 

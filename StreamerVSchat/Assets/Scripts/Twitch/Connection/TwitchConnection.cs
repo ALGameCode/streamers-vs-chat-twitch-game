@@ -27,8 +27,9 @@ namespace Twitch.Connection
             try
             {
                 twitchClient = new TcpClient("irc.chat.twitch.tv", 6667);
-                Reader = new StreamReader(twitchClient.GetStream());
-                writer = new StreamWriter(twitchClient.GetStream());
+                NetworkStream networkStream = twitchClient.GetStream();
+                Reader = new StreamReader(networkStream);
+                writer = new StreamWriter(networkStream);
                 writer.WriteLine("PASS " + password);
                 writer.WriteLine("NICK " + username);
                 writer.WriteLine("USER " + username + " 8 * :" + username);
@@ -40,6 +41,7 @@ namespace Twitch.Connection
             {
                 IsConnected = false;
                 Console.WriteLine("Erro na conexão com o Twitch: " + ex.Message);
+                Disconnect(); // Garantir que, se falhar, os recursos sejam limpos
             }
         }
 
@@ -77,14 +79,19 @@ namespace Twitch.Connection
             {
                 if (IsConnected)
                 {
-                    // Disconnect only if already connected
-                    twitchClient.Close();
-                    twitchClient = null;
-                    Reader.Dispose();
-                    Reader = null;
-                    writer.Dispose();
-                    writer = null;
-                    IsConnected = false;
+                    try
+                    {
+                        writer?.Dispose();
+                        Reader?.Dispose();
+                        twitchClient?.Close();
+                    }
+                    finally
+                    {
+                        writer = null;
+                        Reader = null;
+                        twitchClient = null;
+                        IsConnected = false;
+                    }
                 }
             }
         }
@@ -95,9 +102,17 @@ namespace Twitch.Connection
         /// <returns>True if the connection is valid, false otherwise</returns>
         public static bool IsValidConnection()
         {
-            if (IsConnected && twitchClient.Available > 0)
+            if (IsConnected && twitchClient != null && twitchClient.Connected)
             {
-                return true;
+                try
+                {
+                    return twitchClient.Available > 0;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Erro ao validar conexão: " + ex.Message);
+                    return false;
+                }
             }
             return false;
         }

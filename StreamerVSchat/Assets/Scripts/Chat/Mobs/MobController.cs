@@ -69,7 +69,10 @@ public class MobController : EntityStatus
     private void DeadBehavior()
     {
         canMove = false;
-        ChatStatus.instance.chatUsers[summonerName].DamageDone += DamageDone;
+        if (!string.IsNullOrEmpty(summonerName) && ChatStatus.instance.chatUsers.ContainsKey(summonerName))
+        {
+            ChatStatus.instance.chatUsers[summonerName].DamageDone += DamageDone;
+        }
         // Animacao de morte e esperar um tempo
         Destroy(this.gameObject);
     }
@@ -77,7 +80,10 @@ public class MobController : EntityStatus
     private void EndGameStatus()
     {
         canMove = false;
-        ChatStatus.instance.chatUsers[summonerName].DamageDone += DamageDone;
+        if (!string.IsNullOrEmpty(summonerName) && ChatStatus.instance.chatUsers.ContainsKey(summonerName))
+        {
+            ChatStatus.instance.chatUsers[summonerName].DamageDone += DamageDone;
+        }
         Destroy(this);
     }
 

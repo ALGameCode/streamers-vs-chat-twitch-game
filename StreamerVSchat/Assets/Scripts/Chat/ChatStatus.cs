@@ -48,7 +48,7 @@ public class ChatStatus : EntityStatus
             return;
         }
         chatUsers.Add(userName, new ChatUser(userName, 0, 1, 0));
-        ControllerGameUI.instance.SetTextChatCommandPlay(userName);
+        FindObjectOfType<ControllerGameUI>().SetTextChatCommandPlay(userName); // TODO: Change
     }
 
     public string SearchUserDamage()
@@ -68,7 +68,21 @@ public class ChatStatus : EntityStatus
 
         return name;
     }
-    
+
+    private void ChatDie()
+    {
+        //Animacao
+        // ...
+        GameManager.instance.EndGame(GameWinner.Player);
+    }
+
+    public override void DecreaseLife(int qtd)
+    {
+        base.DecreaseLife(qtd);
+        if (life <= 0) ChatDie();
+    }
+
+
 }
 
 public class ChatUser

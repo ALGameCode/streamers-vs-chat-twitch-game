@@ -7,6 +7,7 @@ namespace Twitch
     public static class ExecuteCommand
     {
         private const int CHAT_ENERGY_RECOVER = 1;
+        private static string warningEnergy = "Insufficient energy!!";
 
         /// <summary>
         /// Executes the specified command action based on the given command configuration and command tuple.
@@ -17,6 +18,13 @@ namespace Twitch
         {
             string chatUserName = commandTuple.chatUserName;
             string command = commandTuple.command;
+
+            if ((!VerifyChatUser(chatUserName)) && (!command.Equals("!play")))
+            {
+                return;
+            }
+
+            TwitchChatManager.Instance.UpdateTextChatHUD(commandTuple);
 
             if (commandConfig.functionsCommandsDictionary.ContainsKey(command))
             {
@@ -75,16 +83,10 @@ namespace Twitch
         /// <param name="chatUserName">The username of the chat user.</param>
         private static void SumEnergy(string chatUserName)
         {
-            if (!VerifyChatUser(chatUserName))
-            {
-                return;
-            }
-
             int currentEnergy = ChatStatus.instance.energy;
             ChatStatus.instance.AddEnergy(CHAT_ENERGY_RECOVER);
 
-            ControllerGameUI.instance.SetTextPoints(currentEnergy.ToString());
-            ControllerGameUI.instance.ChangeEnergyUI();
+            TwitchChatManager.Instance.UpdateEnergyHUD();
         }
 
         /// <summary>
@@ -93,10 +95,6 @@ namespace Twitch
         /// <param name="chatUserName"></param>
         private static void ExecuteVoting(string chatUserName)
         {
-            if (!VerifyChatUser(chatUserName))
-            {
-                return;
-            }
             // TODO: ... 
         }
 
@@ -107,11 +105,6 @@ namespace Twitch
         /// <param name="chatUserName">The name of the chat user.</param>
         private static void RandomMob(CommandConfig commandConfig, string chatUserName)
         {
-            if (!VerifyChatUser(chatUserName))
-            {
-                return;
-            }
-
             int index = GenericTools.GetRandomIndex(commandConfig.commandsMobs.Count);
             CommandMobs commandMobs = GetMobIndex(commandConfig.commandsMobs, index);
             CommandSummon(commandMobs.Mob, commandMobs.EnemyCost, chatUserName);
@@ -136,13 +129,9 @@ namespace Twitch
         /// <param name="chatUserName">The name of the chat user.</param>
         private static void CommandSummon(GameObject mob, int valEnergy, string chatUserName)
         {
-            if (!VerifyChatUser(chatUserName))
-            {
-                return;
-            }
-
             if (ChatStatus.instance.energy < valEnergy)
             {
+                TwitchChatManager.Instance.UpdateWarningTextChatHUD(warningEnergy);
                 return;
             }
             

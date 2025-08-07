@@ -1,34 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Save : MonoBehaviour
+public static class Save
 {
-    
-    public static Save instance;
 
-    void Awake()
-    {
-        if(instance == null)
-        {
-            instance = this;
-        }
-    }
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
-
-    public void SaveConnectPlayerInfo(string username, string channelname)
+    public static void SaveConnectPlayerInfo(string username, string channelname)
     {
         PlayerPrefs.SetString("username", username);
         PlayerPrefs.SetString("channelname", channelname);
         PlayerPrefs.Save();
+    }
+
+    public static void SaveOAuthPassword(string pass)
+    {
+        PlayerPrefs.SetString("password", pass);
+        PlayerPrefs.Save();
+    }
+
+    public static void DeleteOAuthPassword()
+    {
+        PlayerPrefs.DeleteKey("password");
+    }
+
+    public static void DeleteAlSave()
+    { 
+        PlayerPrefs.DeleteAll(); 
     }
 }

@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rigidbody;
     private Vector2 moveInput;
 
+    private SpriteRenderer spriteRenderer;
+
     private bool canTakeDamage = true;
 
     void Awake()
@@ -37,13 +39,18 @@ public class PlayerController : MonoBehaviour
     {
         playerAction = new Player();
         rigidbody = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        if(spriteRenderer == null)
+        {
+            Debug.LogWarning("There are no a sprite renderer");
+        }
     }
 
     private void PlayerDie()
     {
         //Animacao
         // ...
-        GameManager.instance.EndGame();
+        GameManager.instance.EndGame(GameWinner.Chat);
     }
 
 
@@ -51,6 +58,18 @@ public class PlayerController : MonoBehaviour
     {
         moveInput = playerAction.PlayerMove.Move.ReadValue<Vector2>();
         transform.Translate(moveInput.x * (PlayerStatus.instance.speed * Time.deltaTime), moveInput.y * (PlayerStatus.instance.speed * Time.deltaTime), 0f);
+
+        if(spriteRenderer != null)
+        {
+            if(moveInput.x > 0f)
+            {
+                spriteRenderer.flipX = true;
+            }
+            else if(moveInput.x < 0f)
+            {
+                spriteRenderer.flipX = false;
+            }
+        }
     }
 
     void OnCollisionEnter2D(Collision2D coll)

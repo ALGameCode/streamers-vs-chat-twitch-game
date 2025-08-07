@@ -6,6 +6,8 @@ public class LifeCrystal : MonoBehaviour
 {
     private int life = 10;
 
+    private static int totalCrystalDestroyed = 0; // Contador global de cristais destruidos
+
     private void CrystalDamage(int damage)
     {
         if(life > 0)
@@ -15,10 +17,12 @@ public class LifeCrystal : MonoBehaviour
         else
         {
             ChatStatus.instance.DecreaseLife(1);
-            ControllerGameUI.instance.SetChatLifeSprite();
+            FindObjectOfType<ControllerGameUI>().SetChatLifeSprite(); // TODO: Change
             // TODO: Atualizar UI, desabilitando o ultimo cristal da lista
             // TODO: Chamar animação de cristal quebrando
-            Destroy(this.gameObject);
+            totalCrystalDestroyed++; // Implementando contador de cristais destruidos
+            CrystalEventManager.CrystalDestroyed(totalCrystalDestroyed); // Distaprando o evento para o HordeManager
+            Destroy(this.gameObject); // Destruir cristal
         }
     }
 

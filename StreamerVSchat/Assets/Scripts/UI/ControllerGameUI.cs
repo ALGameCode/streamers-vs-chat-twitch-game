@@ -1,92 +1,52 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ControllerGameUI : MonoBehaviour
 {
-    [Header("Streamer")]
-    public Text textStreamerName;
-    public Slider playerHP;
-    public GameObject energyBallPlayer;
-    public List<Sprite> energyBallPlayerValue = new List<Sprite>();
+    [Header("Streamer:")]
+    [SerializeField] private Text textStreamerName;
+    [SerializeField] private Slider playerHP;
+    [SerializeField] private GameObject energyBallPlayer;
+    [SerializeField] private List<Sprite> energyBallPlayerValue = new List<Sprite>();
 
     [Space(10)]
-    [Header("Chat")]
-    public Text textPoints;
-    public Text textChatCommands;
-    public GameObject energyBallEnemy;
-    public List<Sprite> energyBallEnemyValue = new List<Sprite>();
-    public List<GameObject> lifeCrystalChat = new List<GameObject>();
-    public Sprite chatCrystal;
-    public Sprite chatBrokenCrystal;
-
+    [Header("Chat:")]
+    [SerializeField] private Text textPoints;
+    [SerializeField] private Text textChatCommands;
+    [SerializeField] private GameObject energyBallEnemy;
+    [SerializeField] private List<Sprite> energyBallEnemyValue = new List<Sprite>();
+    [SerializeField] private List<GameObject> lifeCrystalChat = new List<GameObject>();
+    [SerializeField] private int linesLimit = 15;
+    [SerializeField] private GameObject endGamePopUp;
 
     [Space(10)]
-    [Header("Game")]
-    public Text textTimer;
+    [Header("Game:")]
+    [SerializeField] private Text textTimer;
 
     private string commmandText;
-
-    // PopUp
-    public GameObject endGamePopUp;
-
-    public static ControllerGameUI instance;
-
-    void Awake()
-    {
-        if(instance == null)
-        {
-            instance = this;
-        }
-    }
 
     void Start()
     {
         ChangeEnergyUI();
         SetChatLifeSprite();
+        commmandText = textStreamerName.text;
     }
 
     void Update()
     {
         SetPlayerHPSlider();
         TimerPrint();
-        if(GameManager.instance.OnEndGame)
+        if (GameManager.instance.OnEndGame)
         {
             endGamePopUp.SetActive(true);
         }
     }
 
-    public void SetTextStreamName(string streamerName)
-    {
-        textStreamerName.text = streamerName;
-    }
-
-    public void SetTextPoints(string points)
-    {
-        textPoints.text = points;
-    }
-
-    public void SetTextChatCommands(string commands)
-    {
-        textChatCommands.text = commands;
-    }
-
-    public void SetTextChatCommands((string chatUserName, string command) commandTuple)
-    {
-        commmandText = $"{commmandText} \n {commandTuple.chatUserName} : {commandTuple.command}";
-        textChatCommands.text = commmandText;
-    }
-
-    public void SetTextChatCommandPlay(string chatUserName)
-    {
-        commmandText = $"{commmandText} \n The chat user {chatUserName} is now playing!";
-        textChatCommands.text = commmandText;
-    }
-
     public void ShowPopUpPainel(GameObject popUp)
     {
-        if(popUp.activeSelf)
+        if (popUp.activeSelf)
         {
             popUp.SetActive(false);
         }
@@ -98,65 +58,100 @@ public class ControllerGameUI : MonoBehaviour
 
     public void ChangeEnergyUI()
     {
-        int index = GetEnergyIndex(ChatStatus.instance.EnergyPercent());        
+        int index = GetEnergySpriteIndex(ChatStatus.instance.EnergyPercent());
         energyBallEnemy.GetComponent<Image>().sprite = energyBallEnemyValue[index];
     }
 
-    private int GetEnergyIndex(int percent)
+    private int GetEnergySpriteIndex(int percent)
     {
-        if (percent > 86)
-            return 8;
-        if (percent > 74)
-            return 7;
-        if (percent > 61)
-            return 6;
-        if (percent > 49)
-            return 5;
-        if (percent > 36)
-            return 4;
-        if (percent > 24)
-            return 3;
-        if (percent > 11)
-            return 2;
-        if (percent > 0)
-            return 1;
-
-        return 0;
+        int maxIndex = energyBallEnemyValue.Count - 1;
+        float percentage = percent / 100f;
+        int spriteIndex = Mathf.RoundToInt(percentage * maxIndex);
+        return Mathf.Clamp(spriteIndex, 0, maxIndex);
     }
 
     public void SetPlayerHPSlider()
     {
         playerHP.maxValue = PlayerStatus.instance.MAX_LIFE;
-        playerHP.value  = PlayerStatus.instance.life;
+        playerHP.value = PlayerStatus.instance.life;
+    }
+
+    public void SetChatLifeSprite()
+    {
+        if (lifeCrystalChat == null) return;
+
+        for (int i = 0; i < lifeCrystalChat.Count; i++)
+        {
+            var go = lifeCrystalChat[i];
+            if (!go.activeSelf) continue;
+
+            var img = go.GetComponent<Image>();
+            if (img == null) continue;
+
+            // se ainda tiver "vida" para esse cristal, pinta de branco
+            if (ChatStatus.instance.life > i)
+                img.color = Color.white;
+            else
+                img.color = Color.black;
+        }
+    }
+
+    #region HUD_Text
+
+    public void SetTextStreamName(string streamerName)
+    {
+        textStreamerName.text = streamerName;
+    }
+
+    public void SetTextPoints(string points)
+    {
+        textPoints.text = points;
+    }
+
+    public void SetTextChatCommands((string chatUserName, string command) commandTuple)
+    {
+        commmandText = $"{commmandText} \n {commandTuple.chatUserName} : {commandTuple.command}";
+        SetTextOnChatUI(commmandText);
+    }
+
+    public void SetTextChatCommandPlay(string chatUserName)
+    {
+        commmandText = $"{commmandText} \n The chat user {chatUserName} is now playing!";
+        SetTextOnChatUI(commmandText);
+    }
+
+    public void SetTextChatWarning(string chatText)
+    {
+        string textChatWarning = $"{commmandText} \n {chatText}";
+        SetTextOnChatUI(textChatWarning);
+    }
+
+    public void SetTextOnChatUI(string fullText)
+    {
+        textChatCommands.text = fullText;
+        string[] linesArray = textChatCommands.text.Split('\n');
+        List<string> lines = linesArray.ToList();
+
+        if (lines.Count > linesLimit)
+        {
+            RemoveFirstLine(lines);
+        }
+    }
+
+    private void RemoveFirstLine(List<string> lines)
+    {
+        lines.RemoveAt(1);
+        commmandText = string.Join("\n", lines);
+        textChatCommands.text = commmandText;
     }
 
     public void TimerPrint()
     {
+        // TODO: Passas as duas primeiras linhas para outro código especifico de timer, e deixar só a ultima
         int minuts = ((int)GameManager.instance.GameTime) / 60;
         int seconds = ((int)GameManager.instance.GameTime) - (minuts * 60);
         textTimer.text = $"{minuts} : {seconds}";
     }
 
-    public void SetChatLifeSprite()
-    {
-        if(lifeCrystalChat != null)
-        {
-            for(int i = 0; i < lifeCrystalChat.Count; i++)
-            {
-                Debug.Log($"LIFE: index: {i}");
-                if(ChatStatus.instance.life > i)
-                {
-                    if(lifeCrystalChat[i].activeSelf)
-                        lifeCrystalChat[i].GetComponent<Image>().sprite = chatCrystal;
-                }
-                else
-                {
-                    if(lifeCrystalChat[i].activeSelf)
-                        lifeCrystalChat[i].GetComponent<Image>().sprite = chatBrokenCrystal;
-                }
-            }
-        }
-        
-    }
-
+    #endregion HUD_Text
 }

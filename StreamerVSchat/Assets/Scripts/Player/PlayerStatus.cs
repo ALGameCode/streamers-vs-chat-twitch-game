@@ -27,7 +27,7 @@ public class PlayerStatus : EntityStatus
     public void GetPlayerStreamName()
     {
         PlayerName = TwitchConnection.ChannelName.Substring(0);
-        ControllerGameUI.instance.SetTextStreamName(PlayerName);
+        FindObjectOfType<ControllerGameUI>().SetTextStreamName(PlayerName); // TODO: Change
     }
 
     

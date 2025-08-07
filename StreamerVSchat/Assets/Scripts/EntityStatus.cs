@@ -39,7 +39,7 @@ public abstract class EntityStatus : MonoBehaviour
         if(life < MAX_LIFE) life += qtd;
     }
 
-    public void DecreaseLife(int qtd)
+    public virtual void DecreaseLife(int qtd)
     {
         if(life > 0) life -= qtd;
     }

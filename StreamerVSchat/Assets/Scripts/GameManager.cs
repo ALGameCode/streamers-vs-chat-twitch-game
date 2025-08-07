@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public bool OnEndGame {get; private set;}
     public float GameTime {get; private set;}
 
-    
+    public GameWinner Winner { get; private set;}
 
 
     public static GameManager instance;
@@ -50,11 +50,18 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public void EndGame()
+    public void EndGame(GameWinner winner)
     {
         OnPlayGame = false;
         OnEndGame = true;
+        Winner = winner;
         // Pegar Infos do Chat
         // Chamar PopUp
     }
+}
+
+public enum GameWinner
+{
+    Player,
+    Chat
 }
