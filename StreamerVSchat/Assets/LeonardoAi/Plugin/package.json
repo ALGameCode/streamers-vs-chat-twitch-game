@@ -1,0 +1,24 @@
+{
+  "name": "com.leonardoai.leonardoai_plugin",
+  "version": "1.1.1",
+  "displayName": "Leonardo.ai",
+  "description": "The Leonardo.ai Unity Plugin is an interface with the Leonardo.ai API allowing for AI art generation and 3D texturing",
+  "unity": "2021.1",
+  "documentationUrl": "https://github.com/Leonardo-Interactive/leonardo-unity-plugin",
+  "changelogUrl": "https://github.com/Leonardo-Interactive/leonardo-unity-plugin",
+  "licensesUrl": "https://github.com/Leonardo-Interactive/leonardo-unity-plugin",
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "3.0.2"
+  },
+  "keywords": [
+    "AI",
+    "Leonardo",
+    "Texture Generation"
+  ],
+  "author": {
+    "name": "Leonardo.ai",
+    "email": "danny@leonardo.ai",
+    "url": "https://leonardo.ai/"
+  },
+  "type": "library"
+}
