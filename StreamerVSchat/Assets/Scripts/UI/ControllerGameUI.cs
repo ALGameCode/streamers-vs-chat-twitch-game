@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,6 +25,9 @@ public class ControllerGameUI : MonoBehaviour
     [Space(10)]
     [Header("Game:")]
     [SerializeField] private Text textTimer;
+    [SerializeField] private Text textWaveName;
+    [SerializeField] private float timeShowText;
+    private int waveValue = 0;
 
     private string commmandText;
 
@@ -32,6 +36,13 @@ public class ControllerGameUI : MonoBehaviour
         ChangeEnergyUI();
         SetChatLifeSprite();
         commmandText = textStreamerName.text;
+
+        CrystalEventManager.OnCrystalDestroyed += SetWaveName;
+    }
+
+    private void OnDestroy()
+    {
+        CrystalEventManager.OnCrystalDestroyed -= SetWaveName;
     }
 
     void Update()
@@ -94,6 +105,19 @@ public class ControllerGameUI : MonoBehaviour
             else
                 img.color = Color.black;
         }
+    }
+
+    public void SetWaveName(int waveValue)
+    {
+        textWaveName.text = $"Prepare-se para a onda {waveValue}";
+        StartCoroutine(ShowWaveText(timeShowText));
+    }
+
+    private IEnumerator ShowWaveText(float time)
+    {
+        textWaveName.gameObject.SetActive(true);
+        yield return new WaitForSeconds(time);
+        textWaveName.gameObject.SetActive(false);
     }
 
     #region HUD_Text

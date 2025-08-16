@@ -39,7 +39,7 @@ public class HordeManager : MonoBehaviour
     private void OnCrystalDestroyed(int crystalDestroyedCount)
     {
         // Verifico se existe uma horda e inicio o spwan 
-        if(hordeDictionary.TryGetValue(crystalDestroyedCount, out HordeData hordeData))
+        if (hordeDictionary.TryGetValue(crystalDestroyedCount, out HordeData hordeData))
         {
             // Evito invocar a mesma horda ao mesmo tempo
             if(!isSpawningHorde)
