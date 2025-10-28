@@ -74,6 +74,8 @@ crashlytics-build.properties
 
 *.tar.7z
 
+*.meta
+
 
 StreamerVSchat/Library/PackageCache/com.unity.burst@*/.Runtime/hostmac/
 StreamerVSchat/Library/PackageCache/com.unity.burst@1.8.2/.Runtime/libburst-llvm-14.dylib
